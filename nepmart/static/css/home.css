@@ -1,0 +1,91 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  nav{
+      background-color:rgb(21, 32, 43);
+      width: 100vw;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      position: fixed;
+      top: 0px;
+     
+  }
+  .search-product{
+      width: 30%;
+      height: 70%;
+      display: flex;
+      justify-content: space-between;
+      
+  }
+  
+  .search-bar{
+      width: 70%;
+      padding-left: 20px;
+      border: 2px solid black;
+      border-radius: 12px;
+  }
+  .search-bar:focus{
+      outline: none;
+  }
+  
+  #home-search-btn{
+      width: 25%;
+      border-radius: 12px;
+  }
+  
+  .items-container ul{
+      display: flex;
+      list-style-type: none;
+    
+  }
+  .items-container ul li{
+      margin-right: 15px;
+  }
+  
+  .nav-items{
+      text-decoration: none;
+      color: white;
+  }
+  
+  .log-sign-div{
+      width: 12%;
+      height: 70%;
+      display: flex;
+      background-color: green;
+      border-radius: 20px;
+      
+  }
+  
+  .log-sign-button{
+      width: 45%;
+      background-color: transparent;
+      outline: none;
+      border: none;
+  }
+  
+  .homesign-btn {
+      border-radius: 20px; /* Outer round edges */
+      background-color: rgb(192, 228, 192);
+      width: 55%;
+  }
+  
+  /* Login Button - Rounded Edges */
+  
+  .homesign-btn:hover{
+      background-color:rgb(15, 193, 15);
+  }
+  
+  .homesign-btn .log-sign-link {
+      color: black;
+  }
+  
+  .log-sign-link{
+      text-decoration: none;
+      color: white;
+      font-weight: 400;
+  }
