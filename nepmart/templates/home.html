@@ -7,7 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-<body>
+<>
     <!-- navbar starts here -->
      <nav>
         <div id="nav-logo" style="color:white;">logo</div>
@@ -30,5 +30,40 @@
 
         </div>
      </nav>
+     {% comment %}add section starts here{% endcomment %}
+     <div class="trend-section">
+        <h2>Trending Advertisements</h2>
+        <div class="ad-container">
+            {% for ad in ads %}
+                <img class="ad-slide" src="{{ ad.image.url }}" alt="Advertisement Image">
+            {% endfor %}
+        </div>
+    </div>
+    
+
+    
+    
+    
+
+
+         <!-- Footer starts here -->
+    <footer>
+        <div class="footer">
+            <div class="footer-content"> <p>&copy; 2024 MS57. All rights reserved.</p>
+                <p>Milan Shahi</p>
+             </div>
+            <div class="footer-content">Follow us on
+                <div class="social-media"> 
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="30" onclick="location.href='https://facebook.com'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="30" height="30" onclick="location.href='https://instagram.com'" style="cursor:pointer;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="30" height="30" onclick="location.href='https://linkedin.com'" style="cursor:pointer;">
+                     <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/TikTok_logo.png" alt="TikTok" width="30" height="30" onclick="location.href='https://tiktok.com'" style="cursor:pointer;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Twitter_Logo.svg" alt="X" width="30" height="30" onclick="location.href='https://x.com'" style="cursor:pointer;"> -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{% static 'js/ads.js' %}"></script>
 </body>
 </html>
