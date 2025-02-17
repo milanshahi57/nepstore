@@ -101,3 +101,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if DEBUG:
     import django
     django.setup()
+
+
+

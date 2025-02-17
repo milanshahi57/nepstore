@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-<>
-    <!-- navbar starts here -->
-     <nav>
+<body>
+    <!-- Navbar -->
+    <nav>
         <div id="nav-logo" style="color:white;">logo</div>
         <div class="search-product">
             <input type="text" placeholder="search-product" class="search-bar">
@@ -22,48 +22,43 @@
                 <li><a href="#" class="nav-items">Contact</a></li>
                 <li><a href="#" class="nav-items">Cart</a></li>
             </ul>
-
         </div>
         <div class="log-sign-div">
             <button class="log-sign-button homesign-btn"><a href="#" class="log-sign-link">Sign Up</a></button>
             <button class="log-sign-button homelog-btn"><a href="#" class="log-sign-link login-txt">Log In</a></button>
-
         </div>
-     </nav>
-     {% comment %}add section starts here{% endcomment %}
-     <div class="trend-section">
-        <h2>Trending Advertisements</h2>
-        <div class="ad-container">
-            {% for ad in ads %}
-                <img class="ad-slide" src="{{ ad.image.url }}" alt="Advertisement Image">
-            {% endfor %}
+    </nav>
+
+    <!-- Banner Section -->
+    <div class="image-slider-container">
+        <div class="image-slider">
+            <img src="{% static 'images/1.png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/15.png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/102.png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/q1.png' %}" alt="Logo" class="image-slide">
         </div>
-    </div>
     
+        <button class="slider-button prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="slider-button next" onclick="changeImage(1)">&#10095;</button>
+      </div>
 
-    
-    
-    
-
-
-         <!-- Footer starts here -->
+    <!-- Footer -->
     <footer>
         <div class="footer">
-            <div class="footer-content"> <p>&copy; 2024 MS57. All rights reserved.</p>
+            <div class="footer-content"> 
+                <p>&copy; 2024 MS57. All rights reserved.</p>
                 <p>Milan Shahi</p>
-             </div>
+            </div>
             <div class="footer-content">Follow us on
                 <div class="social-media"> 
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="30" onclick="location.href='https://facebook.com'">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="30" height="30" onclick="location.href='https://instagram.com'" style="cursor:pointer;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="30" height="30" onclick="location.href='https://linkedin.com'" style="cursor:pointer;">
-                     <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/TikTok_logo.png" alt="TikTok" width="30" height="30" onclick="location.href='https://tiktok.com'" style="cursor:pointer;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Twitter_Logo.svg" alt="X" width="30" height="30" onclick="location.href='https://x.com'" style="cursor:pointer;"> -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="30" height="30" onclick="location.href='https://instagram.com'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="30" height="30" onclick="location.href='https://linkedin.com'">
                 </div>
             </div>
         </div>
     </footer>
-    
+
     <script src="{% static 'js/ads.js' %}"></script>
 </body>
 </html>
