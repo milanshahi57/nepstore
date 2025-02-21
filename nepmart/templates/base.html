@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div id="nav-logo" style="color:white;">logo</div>
+        <div class="search-product">
+            <input type="text" placeholder="search-product" class="search-bar">
+            <button id="home-search-btn">Search</button>
+        </div>
+        <div class="items-container">
+            <ul>
+                <li><a href="#" class="nav-items">Home</a></li>
+                <li><a href="#" class="nav-items">Products</a></li>
+                <li><a href="#" class="nav-items">Contact</a></li>
+                <li><a href="#" class="nav-items">Cart</a></li>
+            </ul>
+        </div>
+        <div class="log-sign-div">
+            <button class="log-sign-button homesign-btn"><a href="#" class="log-sign-link">Sign Up</a></button>
+            <button class="log-sign-button homelog-btn"><a href="#" class="log-sign-link login-txt">Log In</a></button>
+        </div>
+    </nav>
+ {% comment %} navbar ends here  {% endcomment %}
+
+ <main>
+    
+    {% block content %}
+        
+    {% endblock content %}
+        
+ </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer">
+        <div class="footer-content"> 
+            <p>&copy; 2024 MS57. All rights reserved.</p>
+            <p>Milan Shahi</p>
+        </div>
+        <div class="footer-content">Follow us on
+            <div class="social-media"> 
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="30" onclick="location.href='https://facebook.com'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="30" height="30" onclick="location.href='https://instagram.com'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="30" height="30" onclick="location.href='https://linkedin.com'">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/ads.js' %}"></script>
+</body>
+</html>
