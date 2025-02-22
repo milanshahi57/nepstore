@@ -18,8 +18,8 @@
         </div>
         <div class="items-container">
             <ul>
-                <li><a href="#" class="nav-items">Home</a></li>
-                <li><a href="#" class="nav-items">Products</a></li>
+                <li><a href="{% url 'home' %}" class="nav-items">Home</a></li>
+                <li><a href="{% url 'product_list' %}" class="nav-items">Products</a></li>
                 <li><a href="#" class="nav-items">Contact</a></li>
                 <li><a href="#" class="nav-items">Cart</a></li>
             </ul>
@@ -32,11 +32,8 @@
  {% comment %} navbar ends here  {% endcomment %}
 
  <main>
-    
     {% block content %}
-        
     {% endblock content %}
-        
  </main>
 
   <!-- Footer -->

@@ -83,24 +83,15 @@ STATIC_URL = '/static/'
 
 # Directories where Django will look for static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'nepmart/static'),  # Path to your app's static directory
+    BASE_DIR / 'nepmart/static',  # Using pathlib for better readability
 ]
 
 # For production, collect static files into this directory
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files (Uploaded images, like advertisements)
+# Media files (Uploaded images, like product images)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# If in development mode, serve media files through Django
-if DEBUG:
-    import django
-    django.setup()
-
-
-
