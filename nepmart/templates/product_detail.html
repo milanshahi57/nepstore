@@ -9,6 +9,7 @@
     <div class="product-detail-info">
         <h2>{{ product.name }}</h2>
         <p class="price">$ {{ product.price }}</p>
+        <a href="{% url 'add_to_cart' product.id %}" class="cart__add-btn">Add to Cart</a>
         <button class="buy-btn">Buy Now</button>
     </div>
 </div>
