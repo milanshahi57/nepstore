@@ -41,37 +41,3 @@
     color: green;
     font-weight: bold;
 }
-
-/* Product detail page */
-.product-detail {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
-}
-
-.product-detail-img {
-    width: 300px;
-    height: auto;
-    border-radius: 10px;
-}
-
-.product-detail-info {
-    text-align: left;
-}
-
-.buy-btn {
-    background: green;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.buy-btn:hover {
-    background: darkgreen;
-}
