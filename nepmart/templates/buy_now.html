@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+buy now
+    
+{% endblock title %}
+
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group select {
+            appearance: none;
+            background-color: #fff;
+        }
+        .label-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .label-group label {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            margin: 0 5px;
+        }
+        .label-group label:hover {
+            background-color: #f0f0f0;
+        }
+        .promotion {
+            margin-bottom: 15px;
+        }
+        .promotion input {
+            width: calc(100% - 80px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .promotion button {
+            width: 70px;
+            padding: 8px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .order-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .order-summary p {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .order-summary .total {
+            font-weight: bold;
+        }
+        .save-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="fullname">Full name</label>
+            <input type="text" id="fullname" placeholder="Enter your first and last name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="Please enter your phone number">
+        </div>
+        <div class="form-group">
+            <label for="address1">Building / House No / Floor / Street</label>
+            <input type="text" id="address1" placeholder="Please enter">
+        </div>
+        <div class="form-group">
+            <label for="address2">Colony / Suburb / Locality / Landmark</label>
+            <input type="text" id="address2" placeholder="Please enter">
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <select id="region">
+                <option>Please choose your region</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <select id="city">
+                <option>Please choose your city</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="area">Area</label>
+            <select id="area">
+                <option>Please choose your area</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="For Example: Housed 123, Street# 123, ABC Roe">
+        </div>
+        <div class="label-group">
+            <label>OFFICE</label>
+            <label>HOME</label>
+        </div>
+        <div class="promotion">
+            <input type="text" placeholder="Enter Store/">
+            <button>APPLY</button>
+        </div>
+        
+        <button class="save-button">SAVE</button>
+    </div>
+
+    
+{% endblock content %}
+    
