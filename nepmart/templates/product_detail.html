@@ -23,17 +23,20 @@
         <label>Quantity:</label>
         <div class="quantity">
             <button class="minus">-</button>
-            <input type="number" value="1" min="1">
+            <input type="number" value="1" min="1" id="quantity-input">
             <button class="plus">+</button>
         </div>
 
-        <button class="buy-now">Buy Now</button>
-        <button class="add-to-cart">Add to Cart</button>
+        <div class="buttons">
+            <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
+            <a href="{% url 'cart' %}" class="buy-now">Buy Now</a>
+        </div>
 
         <h2>Product Details</h2>
         <p>{{ product.description }}</p>
     </div>
 </div>
+
 <style>
     .product-container {
         display: flex;
@@ -46,7 +49,7 @@
     }
     .main-image {
         width: 100%;
-        height:50%;
+        height: auto;
         border-radius: 10px;
     }
     .image-gallery img {
@@ -71,29 +74,74 @@
     .quantity {
         display: flex;
         align-items: center;
+        gap: 5px;
     }
     .quantity input {
         width: 50px;
         text-align: center;
+        font-size: 16px;
+        padding: 5px;
+    }
+    .quantity button {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        border: none;
+        background: #ddd;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .quantity button:hover {
+        background: #ccc;
+    }
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
     }
     .buy-now, .add-to-cart {
         display: block;
-        margin-top: 10px;
         padding: 10px;
-        width: 100%;
+        text-align: center;
         border: none;
         font-size: 16px;
         cursor: pointer;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px;
     }
     .buy-now {
         background: #2196F3;
-        color: white;
     }
     .add-to-cart {
         background: #FF9800;
-        color: white;
     }
 </style>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const minusBtn = document.querySelector(".minus");
+        const plusBtn = document.querySelector(".plus");
+        const quantityInput = document.getElementById("quantity-input");
+
+        minusBtn.addEventListener("click", function() {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        plusBtn.addEventListener("click", function() {
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+
+        quantityInput.addEventListener("input", function() {
+            if (quantityInput.value < 1 || isNaN(quantityInput.value)) {
+                quantityInput.value = 1;
+            }
+        });
+    });
+</script>
 
 {% endblock %}
