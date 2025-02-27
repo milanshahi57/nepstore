@@ -13,13 +13,21 @@
     </div>
 
     <div class="product-right">
-        <h1>{{ product.name }}</h1>
+        <h1 class="product_name">{{ product.name }}</h1>
         <div class="rating">
-            ⭐⭐⭐⭐⭐ <span>({{ product.reviews.count }} Ratings)</span>
+            ⭐⭐⭐⭐⭐
+             {% comment %} <span>({{ product.reviews.count }})</span> {% endcomment %}
         </div>
-        <p><strong>Brand:</strong> {{ product.brand }}</p>
+        <p class="brand_name"><strong>Brand:</strong> {{ product.brand }}</p>
         <p class="price">Rs. {{ product.price }}</p>
-        <p class="old-price">Rs. {{ product.old_price }} <span class="discount">-{{ product.discount }}%</span></p>
+        <p class="old-price">Rs. {{ product.old_price }}</p> 
+        {% comment %}
+            separated percentage and price 
+        {% endcomment %}
+            
+         <span class="discount">-{{ product.discount }}%</span>
+         <br>
+         <br>
 
         <label>Quantity:</label>
         <div class="quantity">

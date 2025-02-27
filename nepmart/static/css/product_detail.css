@@ -22,14 +22,15 @@
 }
 .price {
     font-size: 24px;
-    color: #ff5722;
+    color: #1a964e;
 }
 .old-price {
     text-decoration: line-through;
     color: gray;
 }
 .discount {
-    color: green;
+    text-decoration: none;
+    color:#1a964e;
 }
 .quantity {
     display: flex;
@@ -75,4 +76,9 @@
 }
 .add-to-cart {
     background: #FF9800;
+}
+
+.brand_name, .product_name{
+    text-transform: capitalize;
+    font-weight: bold;
 }
