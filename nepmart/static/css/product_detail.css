@@ -1,64 +1,78 @@
-/* Product detail page */
-.product-detail {
-    max-width: 500px;
-    margin: auto;
-    text-align: center;
-    margin-top: 100px;
-
+.product-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    margin-top:100px;
 }
-
-.product-title {
-    font-size: 24px;
-    font-weight: bold;
+.product-left {
+    flex: 1;
 }
-
-.product-image {
+.main-image {
     width: 100%;
-    max-width: 300px;
-    margin-bottom: 10px;
+    height: auto;
+    border-radius: 10px;
 }
-
-.product-price {
-    font-size: 20px;
-    color: #ff6600;
+.image-gallery img {
+    width: 60px;
+    margin: 5px;
+    cursor: pointer;
 }
-
-.product-quantity {
+.product-right {
+    flex: 1;
+}
+.price {
+    font-size: 24px;
+    color: #ff5722;
+}
+.old-price {
+    text-decoration: line-through;
+    color: gray;
+}
+.discount {
+    color: green;
+}
+.quantity {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin: 10px 0;
+    gap: 5px;
 }
-
-.qty-btn {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.qty-btn:hover {
-    background-color: #e65c00;
-}
-
-#quantity {
-    width: 40px;
+.quantity input {
+    width: 50px;
     text-align: center;
     font-size: 16px;
-    margin: 0 5px;
+    padding: 5px;
 }
-
-.add-to-cart-btn {
-    background-color: #ff6600;
-    color: white;
+.quantity button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
     border: none;
-    padding: 10px 15px;
-    font-size: 16px;
+    background: #ddd;
     cursor: pointer;
+    border-radius: 5px;
+}
+.quantity button:hover {
+    background: #ccc;
+}
+.buttons {
+    display: flex;
+    gap: 10px;
     margin-top: 10px;
 }
-
-.add-to-cart-btn:hover {
-    background-color: #e65c00;
+.buy-now, .add-to-cart {
+    display: block;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+}
+.buy-now {
+    background: #2196F3;
+}
+.add-to-cart {
+    background: #FF9800;
 }

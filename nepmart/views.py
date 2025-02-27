@@ -1,31 +1,28 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
-# Create your views here.
 
+# Home Page
 def home(request):
-    return render(request, 'home.html',)
+    return render(request, 'home.html')
 
-
-#product page
+# Product List Page
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'product.html', {'products': products})
 
-#product detail page
+# Product Detail Page
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'product_detail.html', {'product': product})
 
-
-
-# View to display cart page
+# Cart Page
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
     total_price = 0
 
     for product_id, quantity in cart.items():
-        product = get_object_or_404(Product, id=int(product_id))  # Ensure ID is an integer
+        product = get_object_or_404(Product, id=int(product_id))
         cart_items.append({
             'product': product,
             'quantity': quantity,
@@ -35,20 +32,40 @@ def cart(request):
 
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
-# View to add product to cart
+# Add to Cart with Quantity
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
 
-    if str(product_id) in cart:
-        cart[str(product_id)] += 1
+    if request.method == "POST":
+        quantity = int(request.POST.get('quantity', 1))  # Get quantity from form
     else:
-        cart[str(product_id)] = 1
+        quantity = 1  # Default to 1 if no quantity is provided
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += quantity
+    else:
+        cart[str(product_id)] = quantity
 
     request.session['cart'] = cart
-    request.session.modified = True  # Ensure session updates
+    request.session.modified = True
     return redirect('cart')
 
-# View to remove product from cart
+# Update Cart Quantity
+def update_cart(request, product_id):
+    if request.method == "POST":
+        new_quantity = int(request.POST.get('quantity', 1))
+        cart = request.session.get('cart', {})
+
+        if new_quantity > 0:
+            cart[str(product_id)] = new_quantity
+        else:
+            cart.pop(str(product_id), None)  # Remove if quantity is zero
+
+        request.session['cart'] = cart
+        request.session.modified = True
+    return redirect('cart')
+
+# Remove from Cart
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
 

@@ -24,7 +24,13 @@
             {% for item in cart_items %}
             <tr class="cart__row">
                 <td class="cart__item">{{ item.product.name }}</td>
-                <td class="cart__quantity">{{ item.quantity }}</td>
+                <td class="cart__quantity">
+                    <form action="{% url 'update_cart' item.product.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
                 <td class="cart__price">Rs. {{ item.product.price }}</td>
                 <td class="cart__subtotal">Rs. {{ item.subtotal }}</td>
                 <td>
