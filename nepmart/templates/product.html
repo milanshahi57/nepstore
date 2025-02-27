@@ -4,18 +4,5 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
 
-<div class="product-container">
-    {% for product in products %}
-    <div class="product-card">
-        <a href="{% url 'product_detail' product.id %}">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-            <div class="product-info">
-                <h3>{{ product.name }}</h3>
-                <p class="price">$ {{ product.price }}</p>
-            </div>
-        </a>
-    </div>
-    {% endfor %}
-</div>
-
+{% include 'product_list.html' %}
 {% endblock %}
