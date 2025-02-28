@@ -76,3 +76,33 @@ def remove_from_cart(request, product_id):
     request.session['cart'] = cart
     request.session.modified = True
     return redirect('cart')
+
+def contact(request):
+    return render(request, 'contact.html')
+
+
+# for contact form submission
+from .models import ContactMessage
+from django.contrib import messages
+
+
+
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+
+        if name and email and message:
+            # Save to database
+            ContactMessage.objects.create(name=name, email=email, message=message)
+
+            # Success message
+            messages.success(request, "Your message has been sent successfully!")
+        else:
+            # Error message
+            messages.error(request, "Please fill in all fields before submitting.")
+
+        return redirect("contact")  # Redirect to clear form and display message
+
+    return render(request, "contact.html")
