@@ -14,6 +14,8 @@
 
     <div class="product-right">
         <h1 class="product_name">{{ product.name }}</h1>
+        <h2>Product Details</h2>
+        <p>{{ product.description }}</p>
         <div class="rating">
             ⭐⭐⭐⭐⭐
              {% comment %} <span>({{ product.reviews.count }})</span> {% endcomment %}
@@ -44,8 +46,7 @@
 
         <a href="{% url 'cart' %}" class="buy-now">Buy Now</a>
 
-        <h2>Product Details</h2>
-        <p>{{ product.description }}</p>
+       
     </div>
 </div>
 

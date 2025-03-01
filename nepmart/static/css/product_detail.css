@@ -69,10 +69,13 @@
     cursor: pointer;
     text-decoration: none;
     color: white;
+    width: 300px;
     border-radius: 5px;
+    margin-top: 10px;
 }
 .buy-now {
     background: #2196F3;
+    
 }
 .add-to-cart {
     background: #FF9800;
