@@ -106,3 +106,9 @@ def contact_view(request):
         return redirect("contact")  # Redirect to clear form and display message
 
     return render(request, "contact.html")
+
+def login(request):
+    return render(request, 'login.html')
+ 
+def register(request):
+    return render(request, 'register.html')
