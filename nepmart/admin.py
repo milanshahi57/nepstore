@@ -14,3 +14,16 @@ admin.site.register(Product, ProductAdmin)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'submitted_at')
     search_fields = ('name', 'email')
+
+# customer registration 
+
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
+
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    search_fields = ('username', 'email')
+    ordering = ('username',)
+
+admin.site.register(CustomUser, CustomUserAdmin)

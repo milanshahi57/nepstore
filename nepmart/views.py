@@ -109,6 +109,40 @@ def contact_view(request):
 
 def login(request):
     return render(request, 'login.html')
- 
+
+# register the User 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+
 def register(request):
-    return render(request, 'register.html')
+    if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect("register")
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken.")
+            return redirect("register")
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already registered.")
+            return redirect("register")
+
+        user = User.objects.create_user(
+            first_name=first_name, last_name=last_name, 
+            username=username, email=email, password=password
+        )
+        user.save()
+        messages.success(request, "Registration successful!")
+        return redirect("register")  # Redirect back to register page to show message
+
+    return render(request, "register.html")

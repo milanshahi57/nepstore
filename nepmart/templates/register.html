@@ -45,4 +45,26 @@
         <p class="form-footer">Already have an account? <a href="{% url 'login' %}" class="form-link">Login here</a></p>
         </div>
     </section>
+
+     {% comment %} implementaion {% endcomment %}
+    {% if messages %}
+    <div id="popup-message" class="popup">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let popup = document.getElementById("popup-message");
+        if (popup) {
+            popup.style.display = "block";
+            setTimeout(function() {
+                popup.style.display = "none";
+            }, 3000);
+        }
+    });
+</script>
+
+
 {% endblock %}
