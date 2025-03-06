@@ -107,8 +107,68 @@ def contact_view(request):
 
     return render(request, "contact.html")
 
-def login(request):
-    return render(request, 'login.html')
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
-def register(request):
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            # Successfully authenticated, log the user in
+            login(request, user)
+            return redirect("home")  # Redirect to home page after successful login
+        else:
+            messages.error(request, "Invalid username or password")
+            return redirect("login")  # Redirect back to login page if authentication fails
+
+    return render(request, "login.html")
+
+#  register user
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import UserProfile
+from django.contrib.auth.hashers import make_password, check_password  # Hashing passwords
+
+
+# User Registration View
+
+def register_user(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        # Check if passwords match
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect('register_user')
+
+        # Check if email or username already exists
+        if UserProfile.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists.")
+            return redirect('register_user')
+
+        if UserProfile.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken.")
+            return redirect('register_user')
+
+        # Hash password and save user
+        hashed_password = make_password(password)
+        new_user = UserProfile(first_name=first_name, last_name=last_name, email=email, username=username, password=hashed_password)
+        new_user.save()
+
+        messages.success(request, "Registration successful! You can now log in.")
+        return redirect('login')
+
     return render(request, 'register.html')

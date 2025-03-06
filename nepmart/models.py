@@ -33,3 +33,15 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return self.name
+
+#user registration
+
+class UserProfile(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=255)  # Store hashed password
+
+    def __str__(self):
+        return self.username  # Display username in Django admin

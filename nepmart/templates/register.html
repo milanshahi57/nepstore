@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
 
     <section id="register" class="register-section">
-        <form method="post" action="{% url 'register' %}" class="register-form">
+        <form method="post" action="{% url 'register_user' %}" class="register-form">
             {% csrf_token %}
 
             <label for="first_name" class="form-label">First Name:<br>

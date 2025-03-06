@@ -16,3 +16,12 @@ class ContactMessageAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email')
 
 # customer registration 
+from .models import UserProfile
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'first_name', 'last_name', 'username', 'email')  # Display these fields
+    search_fields = ('username', 'email')  # Search by username or email
+
+admin.site.register(UserProfile, UserProfileAdmin)
+
+

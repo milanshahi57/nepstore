@@ -3,14 +3,14 @@ from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from django.urls import path
-from .views import register, login
+from .views import register_user, login_view
 from .views import product_list, product_detail,update_cart
 
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('register/', register, name='register'),
-    path('login/', login, name='login'),
+    path("register/", register_user, name="register_user"), 
+    path('login/', login_view, name='login'),
     path('products/', product_list, name='product_list'),
     path('product/<int:product_id>/', product_detail, name='product_detail'),
     path('cart/', views.cart, name='cart'),
