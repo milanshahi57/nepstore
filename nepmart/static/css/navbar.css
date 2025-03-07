@@ -95,7 +95,7 @@ nav {
 .footer {
   height: 100px;
   width: 100vw;
-  background-color: #002a73;
+  background-color: rgb(27, 41, 55);
   display: flex;
   justify-content: space-between;
   color: white;
