@@ -105,7 +105,11 @@
     90% { opacity: 1; transform: translate(-50%, 0); }
     100% { opacity: 0; transform: translate(-50%, -50px); }
 }
-
+.popup.show {
+  display: block;
+  animation: fadeInOut 3s ease-in-out;
+  z-index: 10000000;
+}
 
 /* login css  */
 /* Login Page CSS */

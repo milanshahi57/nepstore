@@ -111,22 +111,20 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 def login_view(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        
-        # Authenticate the user
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            # Successfully authenticated, log the user in
-            login(request, user)
-            return redirect("home")  # Redirect to home page after successful login
-        else:
-            messages.error(request, "Invalid username or password")
-            return redirect("login")  # Redirect back to login page if authentication fails
 
-    return render(request, "login.html")
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redirect to home or dashboard
+        else:
+            messages.error(request, "Invalid username or password!")  # Error message
+            return redirect('login')
+
+    return render(request, 'login.html')
+
 
 #  register user
 
