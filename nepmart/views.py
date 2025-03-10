@@ -6,6 +6,9 @@ def home(request):
     products = Product.objects.all()
     return render(request, 'home.html',  {'products': products})
 
+def buy_now(request):
+    return render(request, 'buy_now.html')
+
 # Product List Page
 def product_list(request):
     products = Product.objects.all()
