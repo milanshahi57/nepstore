@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from .models import Product
 
 # Home Page
 def home(request):
     products = Product.objects.all()
-    return render(request, 'home.html',  {'products': products})
+    return render(request, 'home.html', {'products': products})
 
 def buy_now(request):
     return render(request, 'buy_now.html')
@@ -36,23 +37,25 @@ def cart(request):
 
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
-# Add to Cart with Quantity
+# Add to Cart without Redirection
 def add_to_cart(request, product_id):
-    cart = request.session.get('cart', {})
-
     if request.method == "POST":
+        cart = request.session.get('cart', {})
+
         quantity = int(request.POST.get('quantity', 1))  # Get quantity from form
-    else:
-        quantity = 1  # Default to 1 if no quantity is provided
 
-    if str(product_id) in cart:
-        cart[str(product_id)] += quantity
-    else:
-        cart[str(product_id)] = quantity
+        if str(product_id) in cart:
+            cart[str(product_id)] += quantity
+        else:
+            cart[str(product_id)] = quantity
 
-    request.session['cart'] = cart
-    request.session.modified = True
-    return redirect('cart')
+        request.session['cart'] = cart
+        request.session.modified = True
+
+        # Return JSON response instead of redirecting
+        return JsonResponse({"success": True, "message": "Item added to the cart"})
+
+    return JsonResponse({"success": False, "message": "Invalid request"}, status=400)
 
 # Update Cart Quantity
 def update_cart(request, product_id):
@@ -83,12 +86,9 @@ def remove_from_cart(request, product_id):
 def contact(request):
     return render(request, 'contact.html')
 
-
-# for contact form submission
+# Contact Form Submission
 from .models import ContactMessage
 from django.contrib import messages
-
-
 
 def contact_view(request):
     if request.method == "POST":
@@ -97,19 +97,16 @@ def contact_view(request):
         message = request.POST.get("message")
 
         if name and email and message:
-            # Save to database
             ContactMessage.objects.create(name=name, email=email, message=message)
-
-            # Success message
             messages.success(request, "Your message has been sent successfully!")
         else:
-            # Error message
             messages.error(request, "Please fill in all fields before submitting.")
 
-        return redirect("contact")  # Redirect to clear form and display message
+        return redirect("contact")  
 
     return render(request, "contact.html")
 
+# Login
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
@@ -123,23 +120,18 @@ def login_view(request):
             login(request, user)
             return redirect('home')  # Redirect to home or dashboard
         else:
-            messages.error(request, "Invalid username or password!")  # Error message
+            messages.error(request, "Invalid username or password!")  
             return redirect('login')
 
     return render(request, 'login.html')
 
-
-#  register user
-
+# Register User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserProfile
-from django.contrib.auth.hashers import make_password, check_password  # Hashing passwords
-
-
-# User Registration View
+from django.contrib.auth.hashers import make_password, check_password
 
 def register_user(request):
     if request.method == 'POST':
@@ -150,12 +142,10 @@ def register_user(request):
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
 
-        # Check if passwords match
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect('register_user')
 
-        # Check if email or username already exists
         if UserProfile.objects.filter(email=email).exists():
             messages.error(request, "Email already exists.")
             return redirect('register_user')
@@ -164,7 +154,6 @@ def register_user(request):
             messages.error(request, "Username already taken.")
             return redirect('register_user')
 
-        # Hash password and save user
         hashed_password = make_password(password)
         new_user = UserProfile(first_name=first_name, last_name=last_name, email=email, username=username, password=hashed_password)
         new_user.save()

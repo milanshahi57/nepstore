@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/product_detail.css' %}">
+
 <div class="product-container">
     <div class="product-left">
         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="main-image">
@@ -18,18 +19,12 @@
         <p>{{ product.description }}</p>
         <div class="rating">
             ⭐⭐⭐⭐⭐
-             {% comment %} <span>({{ product.reviews.count }})</span> {% endcomment %}
         </div>
         <p class="brand_name"><strong>Brand:</strong> {{ product.brand }}</p>
         <p class="price">Rs. {{ product.price }}</p>
-        <p class="old-price">Rs. {{ product.old_price }}</p> 
-        {% comment %}
-            separated percentage and price 
-        {% endcomment %}
-            
-         <span class="discount">-{{ product.discount }}%</span>
-         <br>
-         <br>
+        <p class="old-price">Rs. {{ product.old_price }}</p>
+        <span class="discount">-{{ product.discount }}%</span>
+        <br><br>
 
         <label>Quantity:</label>
         <div class="quantity">
@@ -38,19 +33,18 @@
             <button class="plus">+</button>
         </div>
 
-        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+        <!-- ✅ Add ID to the form so we can target it in JavaScript -->
+        <form id="add-to-cart-form" data-url="{% url 'add_to_cart' product.id %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
             <button type="submit" class="add-to-cart">Add to Cart</button>
         </form>
 
         <a href="{% url 'buy_now' %}" class="buy-now">Buy Now</a>
-
-       
     </div>
 </div>
+
 <script src="{% static 'js/pd_quantity.js' %}"></script>
-
-
+<script src="{% static 'js/add_to_cart.js' %}"></script> 
 
 {% endblock %}
