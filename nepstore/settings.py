@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'nepmart',  # Your app name here
+    'nepmart',
+    'custom_admin',
 ]
 
 MIDDLEWARE = [
