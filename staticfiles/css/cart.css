@@ -1,0 +1,221 @@
+/* Cart Container */
+.cart {
+    width: 90%;
+    max-width: 1000px;
+    background: white;
+    padding: 30px;
+    margin: 100px auto 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Title */
+.cart__title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cart__title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #007bff;
+    border-radius: 3px;
+}
+
+/* Table */
+.cart__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cart__table-header {
+    background-color: #1a1a1a;
+    color: white;
+    font-weight: 500;
+}
+
+.cart__column {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Table Rows */
+.cart__row {
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.cart__row:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cart__item, .cart__quantity, .cart__price, .cart__subtotal {
+    padding: 15px;
+}
+
+/* Quantity Input */
+.cart__quantity input {
+    width: 50px;
+    padding: 8px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.cart__quantity input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Update Button */
+.cart__quantity button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.cart__quantity button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Remove Button */
+.cart__remove-btn {
+    color: #dc3545;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: 1px solid #dc3545;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cart__remove-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Cart Summary */
+.cart__summary {
+    margin-top: 30px;
+    padding: 25px;
+    border-top: 1px solid #eee;
+    text-align: right;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.cart__total {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+/* Checkout Button */
+.cart__checkout-btn {
+    background-color: #007bff;
+    text-decoration: none;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart__checkout-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Empty Cart Message */
+.cart p {
+    font-size: 18px;
+    color: #666;
+    margin: 30px 0;
+}
+
+/* Shop Now Button */
+.cart__add-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart__add-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cart {
+        width: 95%;
+        padding: 20px;
+        margin-top: 90px;
+    }
+
+    .cart__table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .cart__column {
+        padding: 12px;
+    }
+
+    .cart__quantity input {
+        width: 40px;
+        font-size: 14px;
+    }
+
+    .cart__checkout-btn {
+        width: 100%;
+        font-size: 16px;
+    }
+    
+    .cart__summary {
+        padding: 20px;
+    }
+}

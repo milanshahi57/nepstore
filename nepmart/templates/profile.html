@@ -27,7 +27,6 @@
                 <label>Address:</label>
                 <span>{{ user_profile.address|default:"Not provided" }}</span>
             </div>
-            <a href="{% url 'password_change' %}" class="change-password-btn">Change Password</a>
         </div>
 
         <div class="orders-section">
@@ -121,22 +120,6 @@
 
 .info-group span {
     color: #2d3748;
-}
-
-.change-password-btn {
-    display: inline-block;
-    padding: 8px 16px;
-    background: #4299e1;
-    color: white;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.875rem;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-.change-password-btn:hover {
-    background: #3182ce;
 }
 
 .orders-section {

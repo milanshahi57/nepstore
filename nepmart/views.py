@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Product, ContactMessage, UserProfile, Order, OrderItem
+from .models import Product, ContactMessage, UserProfile, Order, OrderItem, Category
 
 # Home Page
 def home(request):
@@ -35,8 +35,20 @@ def buy_now(request, product_id):
 
 # Product List Page
 def product_list(request):
+    category_slug = request.GET.get('category')
     products = Product.objects.all()
-    return render(request, 'product.html', {'products': products})
+    categories = Category.objects.all()
+    
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)
+    
+    context = {
+        'products': products,
+        'categories': categories,
+        'current_category': category_slug
+    }
+    return render(request, 'product.html', context)
 
 # Product Detail Page
 def product_detail(request, product_id):

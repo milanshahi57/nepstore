@@ -1,4 +1,15 @@
-<div style="text-align:center;margin-top:80px;marign-buttom:0px;font-weight:900;"><h2>PRODUCTS</h2></div>
+<div class="product-title"><h2>PRODUCTS</h2></div>
+
+<div class="category-filters">
+    <a href="{% url 'product_list' %}" class="category-link {% if not current_category %}active{% endif %}">
+        All
+    </a>
+    {% for category in categories %}
+    <a href="{% url 'product_list' %}?category={{ category.slug }}" class="category-link {% if current_category == category.slug %}active{% endif %}">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+</div>
 
 <div class="product-container">
     {% for product in products %}

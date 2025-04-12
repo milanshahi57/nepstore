@@ -17,7 +17,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="{% url 'home' %}" class="logo">
-                <i class="fas fa-store"></i>
+                <img src="{% static 'images/logo.png' %}" alt="logo-img" class="nepstore-logo">
                 Nepstore
             </a>
             
@@ -82,7 +82,7 @@
     </nav>
 
     <main>
-        {% if messages %}
+        {% if messages and not request.path|slice:":19" == "/order_confirmation" %}
         <div class="messages">
             {% for message in messages %}
             <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
@@ -101,7 +101,7 @@
         <div class="footer-container">
             <div class="footer-section">
                 <h3>About Nepstore</h3>
-                <p>Your one-stop shop for all your needs. We offer a wide range of products at competitive prices with excellent customer service.</p>
+                <p>Follow us on :</p>
                 <div class="social-media">
                     <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
                     <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -131,8 +131,8 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <ul class="footer-links">
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Main St, City, Country</li>
-                    <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                    <li><i class="fas fa-map-marker-alt"></i>Bagar-01,Pokhara</li>
+                    <li><i class="fas fa-phone"></i>+977-9762864340</li>
                     <li><i class="fas fa-envelope"></i> info@nepstore.com</li>
                 </ul>
             </div>
@@ -144,5 +144,7 @@
     </footer>
 
     <script src="{% static 'js/ads.js' %}"></script>
+    <script src="{% static 'js/message.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

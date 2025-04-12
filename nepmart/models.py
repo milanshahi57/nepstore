@@ -5,9 +5,25 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True, null=True)  # ✅ Add this
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
     image = models.ImageField(upload_to='products/')
     brand = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -15,7 +31,7 @@ class Product(models.Model):
     discount = models.IntegerField(null=True, blank=True)
     description = models.TextField()
     reviews = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)  # ✅ Add this
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
