@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import dashboard
+from . import views
 
 urlpatterns = [
-    path('', dashboard, name='custom_admin_dashboard'),
+    path('', views.dashboard, name='dashboard'),
+    path('update-order-status/<int:order_id>/', views.update_order_status, name='update_order_status'),
 ]

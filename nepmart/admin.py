@@ -4,19 +4,22 @@ from .models import Product, ContactMessage, UserProfile, Order, OrderItem
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'brand', 'created_at')
-    search_fields = ('name', 'brand')
-    list_filter = ('brand', 'created_at')
+    search_fields = ('name', 'description', 'brand')
+    list_filter = ('created_at', 'brand')
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'submitted_at')
-    search_fields = ('name', 'email')
-    readonly_fields = ('submitted_at',)
+    search_fields = ('name', 'email', 'message')
+    list_filter = ('submitted_at',)
+    readonly_fields = ('name', 'email', 'message', 'submitted_at')
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone', 'created_at')
-    search_fields = ('user__username', 'user__email', 'phone')
+    search_fields = ('user__username', 'phone', 'address')
+    list_filter = ('created_at',)
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -25,11 +28,13 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'full_name', 'total_amount', 'payment_method', 'status', 'created_at']
+    list_display = ['id', 'user', 'full_name', 'total_amount', 'payment_method', 'status', 'created_at']
     list_filter = ['status', 'payment_method', 'payment_completed', 'created_at']
-    search_fields = ['full_name', 'email', 'phone']
+    search_fields = ['user__username', 'full_name', 'email', 'phone']
     inlines = [OrderItemInline]
     readonly_fields = ['created_at', 'updated_at']
+    list_editable = ['status']
+    
     fieldsets = (
         ('Customer Information', {
             'fields': ('user', 'full_name', 'email', 'phone')
@@ -47,22 +52,17 @@ class OrderAdmin(admin.ModelAdmin):
     )
     
     # Add custom actions for updating order status
-    actions = ['mark_as_pending', 'mark_as_processing', 'mark_as_shipped', 'mark_as_delivered', 'mark_as_cancelled']
+    actions = ['mark_as_pending', 'mark_as_delivering', 'mark_as_delivered', 'mark_as_cancelled']
     
     def mark_as_pending(self, request, queryset):
         queryset.update(status='pending')
         self.message_user(request, f"{queryset.count()} order(s) marked as pending.")
     mark_as_pending.short_description = "Mark selected orders as Pending"
     
-    def mark_as_processing(self, request, queryset):
-        queryset.update(status='processing')
-        self.message_user(request, f"{queryset.count()} order(s) marked as processing.")
-    mark_as_processing.short_description = "Mark selected orders as Processing"
-    
-    def mark_as_shipped(self, request, queryset):
-        queryset.update(status='shipped')
-        self.message_user(request, f"{queryset.count()} order(s) marked as shipped.")
-    mark_as_shipped.short_description = "Mark selected orders as Shipped"
+    def mark_as_delivering(self, request, queryset):
+        queryset.update(status='delivering')
+        self.message_user(request, f"{queryset.count()} order(s) marked as delivering.")
+    mark_as_delivering.short_description = "Mark selected orders as Delivering"
     
     def mark_as_delivered(self, request, queryset):
         queryset.update(status='delivered')
@@ -73,5 +73,10 @@ class OrderAdmin(admin.ModelAdmin):
         queryset.update(status='cancelled')
         self.message_user(request, f"{queryset.count()} order(s) marked as cancelled.")
     mark_as_cancelled.short_description = "Mark selected orders as Cancelled"
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order', 'product', 'quantity', 'total')
+    search_fields = ('order__id', 'product__name')
 
 

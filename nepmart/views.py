@@ -244,8 +244,18 @@ def profile(request):
 
 @login_required
 def orders(request):
-    # Placeholder for orders view
-    return render(request, 'orders.html')
+    if request.method == 'POST' and 'delete_order' in request.POST:
+        order_id = request.POST.get('order_id')
+        try:
+            order = Order.objects.get(id=order_id, user=request.user)
+            order.delete()
+            messages.success(request, 'Order has been successfully deleted.')
+        except Order.DoesNotExist:
+            messages.error(request, 'Order not found or you do not have permission to delete it.')
+        return redirect('orders')
+    
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'orders.html', {'orders': orders})
 
 @login_required
 def order_detail(request, order_id):

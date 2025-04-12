@@ -7,10 +7,10 @@
     background-color: #f8f9fa;
     padding: 20px;
     background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-}
-
-/* Form Styling */
-.register-form {
+  }
+  
+  /* Form Styling */
+  .register-form {
     background: white;
     padding: 25px;
     border-radius: 16px;
@@ -52,19 +52,19 @@
     height: 4px;
     background: linear-gradient(90deg, #4299e1, #667eea);
     border-radius: 4px;
-}
-
-/* Label Styling */
-.form-label {
+  }
+  
+  /* Label Styling */
+  .form-label {
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
     color: #4a5568;
     margin-bottom: 6px;
-}
-
-/* Input Styling */
-.form-input {
+  }
+  
+  /* Input Styling */
+  .form-input {
     width: 100%;
     padding: 10px 14px;
     border: 2px solid #e2e8f0;
@@ -73,7 +73,7 @@
     transition: all 0.3s ease;
     background-color: #f8fafc;
     box-sizing: border-box;
-}
+  }
 
 .form-input:focus {
     outline: none;
@@ -147,10 +147,10 @@
 .terms-checkbox a:hover {
     color: #3182ce;
     text-decoration: underline;
-}
-
-/* Button Styling */
-.form-button {
+  }
+  
+  /* Button Styling */
+  .form-button {
     width: 100%;
     background: linear-gradient(90deg, #4299e1, #667eea);
     color: white;
@@ -166,9 +166,9 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-}
-
-.form-button:hover {
+  }
+  
+  .form-button:hover {
     background: linear-gradient(90deg, #3182ce, #5a67d8);
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(66, 153, 225, 0.3);
@@ -177,26 +177,26 @@
 .form-button:active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(66, 153, 225, 0.2);
-}
-
-/* Link Styling */
-.form-link {
+  }
+  
+  /* Link Styling */
+  .form-link {
     color: #4299e1;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-}
-
-.form-link:hover {
+  }
+  
+  .form-link:hover {
     color: #3182ce;
     text-decoration: underline;
-}
+  }
 
-.placeholder-bold::placeholder {
+  .placeholder-bold::placeholder {
     font-weight: 500;
     color: #a0aec0;
-}
-
+  }
+  
 .random_loginlink {
     text-align: center;
     margin-top: 20px;
@@ -207,10 +207,10 @@
     margin-top: 20px;
     font-size: 0.9rem;
     color: #718096;
-}
+  }
 
 /* Popup Styling */
-.popup {
+  .popup {
     position: fixed;
     top: 20px;
     left: 50%;
@@ -236,9 +236,9 @@
 }
 
 .popup.show {
-    display: block;
-    animation: fadeInOut 3s ease-in-out;
-    z-index: 10000000;
+  display: block;
+  animation: fadeInOut 3s ease-in-out;
+  z-index: 10000000;
 }
 
 /* Login CSS */
@@ -249,18 +249,18 @@
     min-height: calc(100vh - 100px);
     background-color: #f8f9fa;
     padding: 40px 20px;
-}
-
-.login-wrapper {
+  }
+  
+  .login-wrapper {
     width: 100%;
     max-width: 400px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     background: white;
-}
-
-.login-section {
+  }
+  
+  .login-section {
     padding: 35px;
     background-color: white;
 }
@@ -285,9 +285,9 @@
     height: 3px;
     background: #4299e1;
     border-radius: 3px;
-}
-
-.login-form {
+  }
+  
+  .login-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -296,17 +296,17 @@
 .form-group {
     margin-bottom: 16px;
     position: relative;
-}
-
-.login-label {
+  }
+  
+  .login-label {
     display: block;
     font-size: 0.9rem;
     font-weight: 500;
     color: #4a5568;
     margin-bottom: 6px;
-}
-
-.login-input {
+  }
+  
+  .login-input {
     width: 100%;
     padding: 10px 15px;
     border: 1px solid #e2e8f0;
@@ -321,9 +321,9 @@
     border-color: #4299e1;
     background-color: white;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-}
-
-.login-button {
+  }
+  
+  .login-button {
     width: auto;
     min-width: 120px;
     background-color: #4299e1;
@@ -340,9 +340,9 @@
     justify-content: center;
     gap: 8px;
     margin: 0 auto;
-}
-
-.login-button:hover {
+  }
+  
+  .login-button:hover {
     background-color: #3182ce;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
@@ -404,9 +404,9 @@
     background-color: #1877f2 !important;
     color: white !important;
     box-shadow: 0 4px 12px rgba(24, 119, 242, 0.2) !important;
-}
-
-.login-footer {
+  }
+  
+  .login-footer {
     text-align: center;
     font-size: 0.9rem;
     margin-top: 25px;
@@ -415,20 +415,20 @@
 
 .login-footer p {
     margin-bottom: 8px;
-}
-
-.login-link {
+  }
+  
+  .login-link {
     color: #4299e1;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-}
-
-.login-link:hover {
+  }
+  
+  .login-link:hover {
     color: #3182ce;
     text-decoration: underline;
-}
-
+  }
+  
 /* Alert styling */
 .messages {
     margin-bottom: 20px;
@@ -475,7 +475,7 @@
 }
 
 /* Register Link Section */
-.register-link-section {
+  .register-link-section {
     flex: 1;
     background-color: #f8f9fa;
     display: flex;
@@ -918,5 +918,5 @@
     .form-input {
         padding: 10px 14px;
     }
-}
+  }
   
