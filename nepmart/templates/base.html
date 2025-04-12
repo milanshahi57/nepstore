@@ -4,56 +4,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>{% block title %}Nepstore - Your One-Stop Shop{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navbar -->
-    <nav>
-        <div id="nav-logo" style="color:white;"><img src="{% static 'images/logo.png' %}" alt="Logo" style="width:50px; height:50px; border-radius:50%;"></div>
-        <div class="search-product">
-            <input type="text" placeholder="search-product" class="search-bar">
-            <button id="home-search-btn">Search</button>
-        </div>
-        <div class="items-container">
-            <ul>
-                <li><a href="{% url 'home' %}" class="nav-items">Home</a></li>
-                <li><a href="{% url 'product_list' %}" class="nav-items">Products</a></li>
-                <li><a href="{% url 'contact' %}" class="nav-items">Contact</a></li>
-                <li><a href="{% url 'cart' %}" class="nav-items">Cart</a></li>
-            </ul>
-        </div>
-        <div class="log-sign-div">
-            <button class="log-sign-button homesign-btn"><a href="{% url 'register_user' %}" class="log-sign-link">Sign Up</a></button>
-            <button class="log-sign-button homelog-btn"><a href="{% url 'login' %}" class="log-sign-link login-txt">Log In</a></button>
-        </div>
-    </nav>
- {% comment %} navbar ends here  {% endcomment %}
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-store"></i>
+                Nepstore
+            </a>
+            
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+                <a href="{% url 'product_list' %}" class="nav-link">
+                    <i class="fas fa-box"></i>
+                    Products
+                </a>
+                <a href="{% url 'contact' %}" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact
+                </a>
+            </div>
 
- <main>
-    {% block content %}
-    {% endblock content %}
- </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer">
-        <div class="footer-content"> 
-            <p>&copy; 2024 MS57. All rights reserved.</p>
-            <p>Milan Shahi</p>
-        </div>
-        <div class="footer-content">Follow us on
-            <div class="social-media"> 
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="30" onclick="location.href='https://facebook.com'">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="30" height="30" onclick="location.href='https://instagram.com'">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="30" height="30" onclick="location.href='https://linkedin.com'">
+            <div class="nav-actions">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'cart' %}" class="nav-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart
+                    </a>
+                    <div class="dropdown">
+                        <button class="nav-action dropdown-toggle">
+                            <i class="fas fa-user"></i>
+                            {{ user.username }}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'profile' %}" class="dropdown-item">
+                                <i class="fas fa-user-circle"></i> Profile
+                            </a>
+                            <a href="{% url 'orders' %}" class="dropdown-item">
+                                <i class="fas fa-box"></i> Orders
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="nav-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart
+                    </a>
+                    <a href="{% url 'login' %}" class="nav-action">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </a>
+                    <a href="{% url 'register_user' %}" class="nav-action">
+                        <i class="fas fa-user-plus"></i>
+                        Sign Up
+                    </a>
+                {% endif %}
             </div>
         </div>
-    </div>
-</footer>
+    </nav>
 
-<script src="{% static 'js/ads.js' %}"></script>
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Nepstore</h3>
+                <p>Your one-stop shop for all your needs. We offer a wide range of products at competitive prices with excellent customer service.</p>
+                <div class="social-media">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'product_list' %}">Products</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Main St, City, Country</li>
+                    <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                    <li><i class="fas fa-envelope"></i> info@nepstore.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nepstore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/ads.js' %}"></script>
 </body>
 </html>

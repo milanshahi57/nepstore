@@ -1,101 +1,99 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("add-to-cart-form");
+    if (!form) return; // Exit if form doesn't exist
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // ❌ Prevent default form submission (no redirect)
+        event.preventDefault();
+
+        // Check if user is authenticated (this will be set in the template)
+        const isAuthenticated = form.hasAttribute('data-authenticated');
+        if (!isAuthenticated) {
+            window.location.href = '/login/?next=' + window.location.pathname;
+            return;
+        }
 
         const formData = new FormData(form);
-        const actionURL = form.getAttribute("data-url"); // ✅ Get URL from form
+        const actionURL = form.getAttribute("data-url");
 
         fetch(actionURL, {
             method: "POST",
             body: formData,
             headers: {
-                "X-Requested-With": "XMLHttpRequest", // ✅ Important for Django
+                "X-Requested-With": "XMLHttpRequest",
             },
+            credentials: 'same-origin'
         })
-        .then(response => response.json()) // ✅ Expect JSON response
-        .then(data => {
-            if (data.success) {
-                showCartAlert(); // Show custom styled alert when the item is added successfully
-            } else {
-                showErrorAlert(); // Show error alert in case of failure
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+            .then(response => {
+                if (response.status === 403) {
+                    // User is not authenticated
+                    window.location.href = '/login/?next=' + window.location.pathname;
+                    throw new Error('Not authenticated');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    showCartAlert("Item added to the cart! 🛒", "success");
+                } else {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        showCartAlert(data.message || "Failed to add item to cart!", "error");
+                    }
+                }
+            })
+            .catch(error => {
+                if (error.message === 'Not authenticated') {
+                    return; // Already handled above
+                }
+                showCartAlert("Please log in to add items to cart", "error");
+            });
     });
 
-    // Function to show the "Item added to the cart" alert
-    function showCartAlert() {
+    function showCartAlert(message, type) {
         let alertBox = document.createElement("div");
-        alertBox.textContent = "Item added to the cart! 🛒";
-        
-        // Styling
-        alertBox.style.position = "fixed";
-        alertBox.style.top = "-50px"; // Start position (hidden)
-        alertBox.style.left = "50%";
-        alertBox.style.transform = "translateX(-50%)";
-        alertBox.style.backgroundColor = "#4CAF50"; // Green success color
-        alertBox.style.color = "white";
-        alertBox.style.padding = "15px 25px";
-        alertBox.style.borderRadius = "8px";
-        alertBox.style.textAlign = "center";
-        alertBox.style.fontSize = "16px";
-        alertBox.style.fontWeight = "bold";
-        alertBox.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)";
-        alertBox.style.zIndex = "1000";
-        alertBox.style.opacity = "0";
-        alertBox.style.transition = "top 0.5s ease-out, opacity 0.5s";
+        alertBox.textContent = message;
+
+        // Common styles
+        const commonStyles = {
+            position: "fixed",
+            top: "-50px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            color: "white",
+            padding: "15px 25px",
+            borderRadius: "8px",
+            textAlign: "center",
+            fontSize: "16px",
+            fontWeight: "bold",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+            zIndex: "1000",
+            opacity: "0",
+            transition: "top 0.5s ease-out, opacity 0.5s"
+        };
+
+        // Type-specific styles
+        const typeStyles = {
+            success: {
+                backgroundColor: "#4CAF50"
+            },
+            error: {
+                backgroundColor: "#FF5722"
+            }
+        };
+
+        // Apply styles
+        Object.assign(alertBox.style, commonStyles, typeStyles[type] || typeStyles.error);
 
         document.body.appendChild(alertBox);
 
-        // Show alert (Slide down)
+        // Show alert
         setTimeout(() => {
             alertBox.style.top = "20px";
             alertBox.style.opacity = "1";
         }, 100);
 
-        // Hide alert after 3 seconds
-        setTimeout(() => {
-            alertBox.style.top = "-50px";
-            alertBox.style.opacity = "0";
-            setTimeout(() => alertBox.remove(), 500);
-        }, 3000);
-    }
-
-    // Function to show the error alert (if any)
-    function showErrorAlert() {
-        let alertBox = document.createElement("div");
-        alertBox.textContent = "Failed to add item to cart! Please try again.";
-
-        // Styling for error alert
-        alertBox.style.position = "fixed";
-        alertBox.style.top = "-50px"; // Start position (hidden)
-        alertBox.style.left = "50%";
-        alertBox.style.transform = "translateX(-50%)";
-        alertBox.style.backgroundColor = "#FF5722"; // Red failure color
-        alertBox.style.color = "white";
-        alertBox.style.padding = "15px 25px";
-        alertBox.style.borderRadius = "8px";
-        alertBox.style.textAlign = "center";
-        alertBox.style.fontSize = "16px";
-        alertBox.style.fontWeight = "bold";
-        alertBox.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)";
-        alertBox.style.zIndex = "1000";
-        alertBox.style.opacity = "0";
-        alertBox.style.transition = "top 0.5s ease-out, opacity 0.5s";
-
-        document.body.appendChild(alertBox);
-
-        // Show alert (Slide down)
-        setTimeout(() => {
-            alertBox.style.top = "20px";
-            alertBox.style.opacity = "1";
-        }, 100);
-
-        // Hide alert after 3 seconds
+        // Hide alert
         setTimeout(() => {
             alertBox.style.top = "-50px";
             alertBox.style.opacity = "0";

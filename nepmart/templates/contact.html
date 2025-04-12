@@ -1,73 +1,99 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contact{% endblock title %}
+{% block title %}Contact | Nepstore{% endblock title %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/contact.css' %}">
 
-<section class="contact-section">
-    <h1>Contact Us</h1>
-    <p>We'd love to hear from you! Please fill out the form below or reach out using the contact details provided.</p>
-    <div class="contact_align">
-    <div class="contact-container">
-        <form class="contact-form" action="{% url 'contact' %}" method="POST">
-            {% csrf_token %}
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required>
-        
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Your Email" required>
-        
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6" placeholder="Your Message" required></textarea>
-        
-            <button type="submit" class="submit-button">Send Message</button>
-        </form>
-    </div>
-
-    <div class="contact-info">
-        <h3>Contact Information</h3>
-        <p><strong>Email:</strong> milanshahi0045@gmail.com</p>
-        <p><strong>Phone:</strong> +977-9762864340</p>
-        <p><strong>Address:</strong> Bagar, Pokhara, Nepal</p>
-    </div>
+<div id="alert-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
+
+<section class="contact-section">
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>milanshahi0045@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h3>Phone</h3>
+                        <p>+977-9762864340</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Address</h3>
+                        <p>Bagar, Pokhara, Nepal</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Business Hours</h3>
+                        <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                        <p>Saturday & Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Send us a Message</h2>
+            <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
 </section>
 
-<!-- Alert pop-up messages in the center -->
-{% if messages %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            {% for message in messages %}
-                let msgType = "{{ message.tags }}"; // 'success' or 'error'
-                let color = msgType === "success" ? "green" : "red";
-                
-                // Create the alert box
-                let alertBox = document.createElement("div");
-                alertBox.textContent = "{{ message }}";
-                alertBox.style.position = "fixed";
-                alertBox.style.top = "12%";
-                alertBox.style.left = "50%";
-                alertBox.style.transform = "translate(-50%, -50%)";
-                alertBox.style.backgroundColor = color;
-                alertBox.style.color = "white";
-                alertBox.style.padding = "20px";
-                alertBox.style.borderRadius = "10px";
-                alertBox.style.textAlign = "center";
-                alertBox.style.zIndex = "1000";
-                alertBox.style.fontSize = "18px";
-                alertBox.style.fontWeight = "bold";
-                alertBox.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
-
-                document.body.appendChild(alertBox);
-                
-                setTimeout(() => {
-                    alertBox.remove();
-                }, 5000);
-            {% endfor %}
-        });
-    </script>
-{% endif %}
+<script>
+// Remove alert messages after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    var alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            alert.style.opacity = '0';
+            setTimeout(function() {
+                alert.remove();
+            }, 300);
+        }, 5000);
+    });
+});
+</script>
 
 {% endblock content %}

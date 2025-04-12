@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}home{% endblock title %}
+{% block title %}Nepstore - Home{% endblock title %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
-    <!-- Banner Section -->
-    <div class="image-slider-container">
-        <div class="image-slider">
-            <img src="{% static 'images/1.png' %}" alt="Logo" class="image-slide">
-            <img src="{% static 'images/Screenshot (146).png' %}" alt="Logo" class="image-slide">
-            <img src="{% static 'images/Screenshot 2024-10-01 094059.png' %}" alt="Logo" class="image-slide">
-            <img src="{% static 'images/q1.png' %}" alt="Logo" class="image-slide">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Welcome to Nepstore</h1>
+                <p>Your one-stop shop for all your needs. Discover amazing products at unbeatable prices.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'product_list' %}" class="btn-shop">Shop Now</a>
+                    <a href="{% url 'product_list' %}" class="btn-browse">Browse Categories</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'images/hero-image.png' %}" alt="Hero Image" class="fade-in">
+            </div>
         </div>
-        <button class="slider-button prev" onclick="changeImage(-1)">&#10094;</button>
-        <button class="slider-button next" onclick="changeImage(1)">&#10095;</button>
-    </div>
-    {% include 'product_list.html' %}
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            {% include 'product_list.html' %}
+        </div>
+    </section>
 
 {% endblock content %}

@@ -1,48 +1,62 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Login |nepstore{% endblock %}
+{% block title %}Login - NepMart{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
-{% if messages %}
-    <div id="popup-message" class="popup">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endif %}
 <div class="login-container">
-
-     <!-- Register Link Section -->
-     <section id="register-link" class="register-link-section">
-      <p class="login-footer">Don't have an account? <a href="{% url 'register_user' %}" class="login-link switch-link" id="to-register">Register here</a></p>
-  </section>
-
     <div class="login-wrapper">
-      <!-- Login Form -->
-        <section id="login" class="login-section">
-            <form method="post" action="{% url 'login' %}" class="login-form">
+        <div class="login-section">
+            <h2>Welcome Back</h2>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'login' %}" class="login-form">
                 {% csrf_token %}
-                <label for="username" class="login-label">Username:<br>
-                    <input type="text" id="username" name="username" class="login-input placeholder-bold" placeholder="Username" required>
-                </label>
-
-                <label for="password" class="login-label">Password:<br>
-                    <input type="password" id="password" name="password" class="login-input placeholder-bold" placeholder="Password" required>
-                </label>
-
-                <button type="submit" class="login-button">Login</button>
+                <div class="form-group">
+                    <label class="login-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="login-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="login-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="login-input" required>
+                </div>
+                <button type="submit" class="login-button">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
             </form>
-           
-        </section>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="social-login">
+                <button class="login-button google-btn">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </button>
+                <button class="login-button facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </button>
+            </div>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="{% url 'register_user' %}" class="login-link">Register here</a></p>
+                <a href="#" class="login-link">Forgot Password?</a>
+            </div>
+        </div>
     </div>
 </div>
-
-
-
-<script src="{% static 'js/message.js' %}"></script>
-
-
-
 {% endblock %}

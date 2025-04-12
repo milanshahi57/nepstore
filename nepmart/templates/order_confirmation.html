@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order Confirmation - Order #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="order-confirmation-container">
+    <div class="order-confirmation-content">
+        <div class="confirmation-header">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your purchase. Your order has been successfully placed.</p>
+        </div>
+
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <div class="order-info">
+                <div class="info-row">
+                    <span class="label">Order Number:</span>
+                    <span class="value">#{{ order.id }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Order Date:</span>
+                    <span class="value">{{ order.created_at|date:"F d, Y" }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span class="value status-{{ order.status }}">{{ order.status|title }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Payment Method:</span>
+                    <span class="value">{{ order.payment_method|title }}</span>
+                </div>
+            </div>
+
+            <h3>Shipping Information</h3>
+            <div class="shipping-info">
+                <p><strong>{{ order.full_name }}</strong></p>
+                <p>{{ order.address }}</p>
+                <p>{{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
+                <p>Phone: {{ order.phone }}</p>
+                <p>Email: {{ order.email }}</p>
+            </div>
+
+            <h3>Order Items</h3>
+            <div class="order-items">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>Rs. {{ item.price }}</td>
+                            <td>Rs. {{ item.total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="total-label">Total Amount:</td>
+                            <td class="total-value">Rs. {{ order.total_amount }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="confirmation-actions">
+            <a href="{% url 'orders' %}" class="btn btn-primary">View All Orders</a>
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.order-confirmation-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.order-confirmation-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.confirmation-header {
+    background: #f8f9fa;
+    padding: 40px 30px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #48bb78;
+    margin-bottom: 20px;
+}
+
+.confirmation-header h1 {
+    color: #2d3748;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.confirmation-header p {
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+.order-details {
+    padding: 30px;
+}
+
+.order-details h2, .order-details h3 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.order-info, .shipping-info {
+    margin-bottom: 30px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.label {
+    width: 150px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.value {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.status-pending {
+    color: #ed8936;
+}
+
+.status-processing {
+    color: #4299e1;
+}
+
+.status-shipped {
+    color: #48bb78;
+}
+
+.status-delivered {
+    color: #48bb78;
+}
+
+.status-cancelled {
+    color: #f56565;
+}
+
+.shipping-info p {
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.items-table th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.items-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4a5568;
+}
+
+.items-table tfoot {
+    font-weight: 600;
+}
+
+.total-label {
+    text-align: right;
+}
+
+.total-value {
+    color: #2d3748;
+}
+
+.confirmation-actions {
+    padding: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+}
+
+.btn-secondary {
+    background: #f8f9fa;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .info-row {
+        flex-direction: column;
+    }
+    
+    .label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .items-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .confirmation-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+</style>
+{% endblock %} 

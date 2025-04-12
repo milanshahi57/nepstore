@@ -1,154 +1,253 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-{% block title %}
-buy now
-    
-{% endblock title %}
-
+{% block title %}Checkout - {{ product.name }}{% endblock %}
 
 {% block content %}
-    <style>
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 70px auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-group select {
-            appearance: none;
-            background-color: #fff;
-        }
-        .label-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        .label-group label {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-            margin: 0 5px;
-        }
-        .label-group label:hover {
-            background-color: #f0f0f0;
-        }
-        .promotion {
-            margin-bottom: 15px;
-        }
-        .promotion input {
-            width: calc(100% - 80px);
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .promotion button {
-            width: 70px;
-            padding: 8px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .order-summary {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-        .order-summary p {
-            margin: 0;
-            padding: 5px 0;
-        }
-        .order-summary .total {
-            font-weight: bold;
-        }
-        .save-button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .save-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<div class="checkout-container">
+    <div class="checkout-content">
+        <!-- Order Summary Section -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="product-details">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">Rs. {{ product.price }}</p>
+                    <p class="quantity">Quantity: 1</p>
+                </div>
+            </div>
+            <div class="total-section">
+                <div class="subtotal">
+                    <span>Subtotal:</span>
+                    <span>Rs. {{ total_price }}</span>
+                </div>
+                <div class="shipping">
+                    <span>Shipping:</span>
+                    <span>Free</span>
+                </div>
+                <div class="total">
+                    <span>Total:</span>
+                    <span>Rs. {{ total_price }}</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="container">
-        <div class="form-group">
-            <label for="fullname">Full name</label>
-            <input type="text" id="fullname" placeholder="Enter your first and last name">
+        <!-- Shipping Information Form -->
+        <div class="shipping-form">
+            <h2>Shipping Information</h2>
+            <form method="POST" action="{% url 'checkout' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" value="{{ user.get_full_name }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address_line1">Address Line 1</label>
+                    <input type="text" id="address_line1" name="address_line1" placeholder="Street address, P.O. box, etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address_line2">Address Line 2 (Optional)</label>
+                    <input type="text" id="address_line2" name="address_line2" placeholder="Apartment, suite, unit, building, floor, etc.">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State/Province</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="postal_code">Postal Code</label>
+                        <input type="text" id="postal_code" name="postal_code" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="special_instructions">Special Instructions (Optional)</label>
+                    <textarea id="special_instructions" name="special_instructions" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone" placeholder="Please enter your phone number">
-        </div>
-        <div class="form-group">
-            <label for="address1">Building / House No / Floor / Street</label>
-            <input type="text" id="address1" placeholder="Please enter">
-        </div>
-        <div class="form-group">
-            <label for="address2">Colony / Suburb / Locality / Landmark</label>
-            <input type="text" id="address2" placeholder="Please enter">
-        </div>
-        <div class="form-group">
-            <label for="region">Region</label>
-            <select id="region">
-                <option>Please choose your region</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <select id="city">
-                <option>Please choose your city</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="area">Area</label>
-            <select id="area">
-                <option>Please choose your area</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" placeholder="For Example: Housed 123, Street# 123, ABC Roe">
-        </div>
-        <div class="label-group">
-            <label>OFFICE</label>
-            <label>HOME</label>
-        </div>
-        <div class="promotion">
-            <input type="text" placeholder="Enter Store/">
-            <button>APPLY</button>
-        </div>
-        
-        <button class="save-button">SAVE</button>
     </div>
+</div>
 
+<style>
+.checkout-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.checkout-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+.order-summary {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+}
+
+.order-summary h2 {
+    margin-bottom: 20px;
+    color: #2d3748;
+    font-size: 1.5rem;
+}
+
+.product-details {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-info h3 {
+    margin: 0 0 8px 0;
+    color: #2d3748;
+    font-size: 1.1rem;
+}
+
+.price {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.quantity {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.total-section {
+    margin-top: 20px;
+}
+
+.subtotal, .shipping, .total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #e2e8f0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2d3748;
+}
+
+.shipping-form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.shipping-form h2 {
+    margin-bottom: 25px;
+    color: #2d3748;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+    border-color: #4299e1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.place-order-btn {
+    width: 100%;
+    padding: 14px;
+    background: #4299e1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.place-order-btn:hover {
+    background: #3182ce;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+}
+
+@media (max-width: 768px) {
+    .checkout-content {
+        grid-template-columns: 1fr;
+    }
     
-{% endblock content %}
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+</style>
+{% endblock %}
     

@@ -42,7 +42,9 @@
     </table>
     <div class="cart__summary">
         <h3 class="cart__total">Total: Rs. {{ total_price }}</h3>
-        <button class="cart__checkout-btn">Proceed to Checkout</button>
+        {% if cart_items %}
+            <a href="{% url 'buy_now' cart_items.0.product.id %}" class="cart__checkout-btn">Proceed to Checkout</a>
+        {% endif %}
     </div>
     {% else %}
     <p>Your cart is empty.</p>
