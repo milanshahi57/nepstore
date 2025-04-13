@@ -5,21 +5,17 @@
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Welcome to Nepstore</h1>
-                <p>Your one-stop shop for all your needs. Discover amazing products at unbeatable prices.</p>
-                <div class="hero-buttons">
-                    <a href="{% url 'product_list' %}" class="btn-shop">Shop Now</a>
-                    <a href="{% url 'product_list' %}" class="btn-browse">Browse Categories</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="{% static 'images/logo.png' %}" alt="Hero Image" class="nepstore" style="height:500px; width:500px; border-radius:50%;">
-            </div>
+    <div class="image-slider-container">
+        <div class="image-slider">
+            <img src="{% static 'images/1.png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/Screenshot (146).png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/Screenshot 2024-10-01 094059.png' %}" alt="Logo" class="image-slide">
+            <img src="{% static 'images/q1.png' %}" alt="Logo" class="image-slide">
         </div>
-    </section>
+        <button class="slider-button prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="slider-button next" onclick="changeImage(1)">&#10095;</button>
+    </div>
+
 
     <!-- Featured Products Section -->
     <section class="featured-products">
