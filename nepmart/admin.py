@@ -1,12 +1,19 @@
 from django.contrib import admin
-from .models import Product, ContactMessage, UserProfile, Order, OrderItem
+from .models import Product, ContactMessage, UserProfile, Order, OrderItem, Category
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ['name']
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'brand', 'created_at')
+    list_display = ('name', 'price', 'brand', 'category', 'created_at')
     search_fields = ('name', 'description', 'brand')
-    list_filter = ('created_at', 'brand')
+    list_filter = ('created_at', 'brand', 'category')
     prepopulated_fields = {'slug': ('name',)}
+    autocomplete_fields = ['category']
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
