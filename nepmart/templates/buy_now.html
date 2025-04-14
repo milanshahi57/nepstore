@@ -7,7 +7,7 @@
 <div class="checkout-container">
     <div class="checkout-content">
         <!-- Order Summary Section -->
-        <div class="order-summary">
+        <div class="order-summary" style="margin-top:80px;">
             <h2>Order Summary</h2>
             <div class="product-details">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Shipping Information Form -->
-        <div class="shipping-form">
+        <div class="shipping-form" style="margin-top:80px;">
             <h2>Shipping Information</h2>
             <form method="POST" action="{% url 'checkout' %}">
                 {% csrf_token %}

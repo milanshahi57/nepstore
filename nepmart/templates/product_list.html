@@ -1,8 +1,8 @@
 <div class="product-title"><h2>PRODUCTS</h2></div>
 
 <div class="category-filters">
-    <a href="{% url 'product_list' %}" class="category-link {% if not current_category %}active{% endif %}">
-        All
+    <a href="{% url 'product_list' %}" class="category-link {% if not current_category %}active{% endif %}" style="text-decoration: none;">
+      All 
     </a>
     {% for category in categories %}
     <a href="{% url 'product_list' %}?category={{ category.slug }}" class="category-link {% if current_category == category.slug %}active{% endif %}">
